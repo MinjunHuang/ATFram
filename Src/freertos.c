@@ -27,7 +27,6 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */     
 #include "main.h"
-#include "Hardware.h"
 #include "AT.h"
 /* USER CODE END Includes */
 
@@ -48,7 +47,7 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
-QueueHandle_t ATcmdQueue = NULL;
+
 
 /* USER CODE END Variables */
 osThreadId defaultTaskHandle;
@@ -91,12 +90,7 @@ void MX_FREERTOS_Init(void) {
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
-	ATcmdQueue = xQueueCreate(10, sizeof(ATCommandConfig));
-    if( ATcmdQueue == 0 )
-    {
-        /* 没有创建成功，用户可以在这里加入创建失败的处理机制 */
-		__ERRORLOG("ATcmdQueue 创建失败");
-    }
+
 	
   /* USER CODE END RTOS_QUEUES */
 
@@ -134,8 +128,9 @@ void StartDefaultTask(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-	  
-    osDelay(1);
+	HAL_GPIO_TogglePin(GPIOE,GPIO_PIN_5);
+    osDelay(200);
+
   }
   /* USER CODE END StartDefaultTask */
 }
@@ -154,8 +149,8 @@ void LEDStartTask(void const * argument)
   for(;;)
   {
 	HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_5);
-	//
-    osDelay(200);
+	ATCommandRegister(AT);
+    osDelay(5000);
   }
   /* USER CODE END LEDStartTask */
 }
@@ -173,9 +168,9 @@ void ATStartTask(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-	HAL_GPIO_TogglePin(GPIOE,GPIO_PIN_5);
-	SendString("AT\r\n");
-	osDelay(5000);
+	HAL_GPIO_WritePin(GPIOE,GPIO_PIN_5,GPIO_PIN_SET);
+	ATCommandSendScheduler();
+	HAL_GPIO_WritePin(GPIOE,GPIO_PIN_5,GPIO_PIN_RESET);
   }
   /* USER CODE END ATStartTask */
 }

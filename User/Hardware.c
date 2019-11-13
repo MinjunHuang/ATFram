@@ -1,6 +1,6 @@
 #include "Hardware.h"
 
-uint8_t UartRXBuff[_UART_RXBUFFSIZE];
+char UartRXBuff[_UART_RXBUFFSIZE];
 
 void UartInit(void)
 {
@@ -34,10 +34,8 @@ void USER_UART_IDLECallback(UART_HandleTypeDef *huart)
     RXDataLength  = _UART_RXBUFFSIZE - __HAL_DMA_GET_COUNTER(&_UART_DMA_HANDLE);   
     
 	// 测试函数：将接收到的数据打印出去
-    __LOG("Receive Data(length = %d):%s ",RXDataLength,UartRXBuff);
-    //HAL_UART_Transmit(&huart1,UartRXBuff,RXDataLength,_UARTTIMEOUT);                     
+    __LOG("Receive Data(length = %d):%s ",RXDataLength,UartRXBuff);                    
 
-    
 	// 清零接收缓冲区
     memset(UartRXBuff,0,RXDataLength);                                            
     RXDataLength = 0;

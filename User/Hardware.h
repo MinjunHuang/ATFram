@@ -22,6 +22,8 @@
 #define _UART_RXBUFFSIZE 128
 
 extern DMA_HandleTypeDef _UART_DMA_HANDLE;
+extern char UartRXBuff[_UART_RXBUFFSIZE];
+
 
 void UartInit(void);
 void SendString(char * str);

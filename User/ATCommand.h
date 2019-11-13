@@ -3,13 +3,13 @@
 
 #include "stdint.h"
 
-typedef void (*pFunc)(char* str);
-
 typedef enum 
 {
   ATERROR = 0, 
   ATSUCCESS = !ATERROR
 }ATStatus;
+
+typedef ATStatus (*pFuncCallback)(char* str);
 
 typedef enum 
 {
@@ -38,11 +38,11 @@ typedef struct
 	uint8_t   	RetryDelay; 		//发送失败后再次发送时的延时，ms为单位
 	uint8_t   	MaxTryCount; 		//最大重试次数
 	uint8_t   	MaxResetCount; 		//最大重启次数
-	pFunc		ATRxCpltCallback;	//AT指令接收完成，指令处理回调函数
+	pFuncCallback		ATRxCpltCallback;	//AT指令接收完成，指令处理回调函数
 } ATCommandConfig;
 
-void AT_Callback(char * str);
-void CGSN_Callback(char * str);
+ATStatus AT_Callback(char * str);
+ATStatus CGSN_Callback(char * str);
 
 
 static const ATCommandConfig ATCommandList[]=

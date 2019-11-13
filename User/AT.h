@@ -7,8 +7,12 @@
 
 extern QueueHandle_t ATcmdQueue ;
 
+void ATCommandRegister(eATCommand	ATCommandName);
 ATStatus CheckATCmdConsistency(void);
 ATStatus ATFormInit(void);
+
+void ATCommandSendScheduler(void);
+
 
 #endif
 

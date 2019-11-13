@@ -1,14 +1,14 @@
 #include "ATCommand.h"
 
 
-void AT_Callback(char * str)
+ATStatus AT_Callback(char * str)
 {
-
+	return ATSUCCESS;
 }
 
-void CGSN_Callback(char * str)
+ATStatus CGSN_Callback(char * str)
 {
-	
+	return ATSUCCESS;
 }
 
 
