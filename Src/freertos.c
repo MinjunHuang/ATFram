@@ -27,6 +27,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */     
 #include "main.h"
+#include "Hardware.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -47,10 +48,12 @@
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
 
+
 /* USER CODE END Variables */
 osThreadId defaultTaskHandle;
-osThreadId LedyTaskHandle;
+osThreadId LedTaskHandle;
 osThreadId ATTaskHandle;
+
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
 
@@ -60,6 +63,7 @@ osThreadId ATTaskHandle;
 void StartDefaultTask(void const * argument);
 void LEDStartTask(void const * argument);
 void ATStartTask(void const * argument);
+
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
 /**
@@ -93,15 +97,17 @@ void MX_FREERTOS_Init(void) {
   osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
-  /* definition and creation of LedyTask */
-  osThreadDef(LedyTask, LEDStartTask, osPriorityLow, 0, 128);
-  LedyTaskHandle = osThreadCreate(osThread(LedyTask), NULL);
+  /* definition and creation of LedTask */
+  osThreadDef(LedTask, LEDStartTask, osPriorityLow, 0, 128);
+  LedTaskHandle = osThreadCreate(osThread(LedTask), NULL);
+
+  /* definition and creation of ATTask */
+  osThreadDef(ATTask, ATStartTask, osPriorityNormal, 0, 128);
+  ATTaskHandle = osThreadCreate(osThread(ATTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
-//  osThreadDef(ATTask, ATStartTask, osPriorityNormal, 0, 128);
-//  ATTaskHandle = osThreadCreate(osThread(ATTask), NULL);
-//  
+
   /* USER CODE END RTOS_THREADS */
 
 }
@@ -140,20 +146,35 @@ void LEDStartTask(void const * argument)
   for(;;)
   {
 	HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_5);
-	//SendString("AT\r\n");
+	//
     osDelay(200);
   }
   /* USER CODE END LEDStartTask */
 }
 
+/* USER CODE BEGIN Header_ATStartTask */
+/**
+* @brief Function implementing the ATTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_ATStartTask */
+void ATStartTask(void const * argument)
+{
+  /* USER CODE BEGIN ATStartTask */
+  /* Infinite loop */
+  for(;;)
+  {
+	HAL_GPIO_TogglePin(GPIOE,GPIO_PIN_5);
+	SendString("AT\r\n");
+	osDelay(5000);
+  }
+  /* USER CODE END ATStartTask */
+}
+
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
-//void ATStartTask(void const * argument)
-//{
-//	//SendString("AT\r\n");	
-//	HAL_GPIO_TogglePin(GPIOE,GPIO_PIN_5);
-//	osDelay(500);
-//}
+
 /* USER CODE END Application */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

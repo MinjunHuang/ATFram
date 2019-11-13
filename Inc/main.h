@@ -36,7 +36,7 @@ extern "C" {
 #include "dma.h"
 #include "usart.h"
 #include "gpio.h"
-#include "Hardware.h"
+
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
