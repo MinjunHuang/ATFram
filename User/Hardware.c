@@ -7,6 +7,9 @@ void UartInit(void)
 	__HAL_UART_ENABLE_IT(&_ATUART_HANDLE, UART_IT_IDLE);  					//使能串口空闲中断
 	HAL_UART_Receive_DMA(&_ATUART_HANDLE, (uint8_t*)UartRXBuff, _UART_RXBUFFSIZE);     	//开启DMA传输
 	__HAL_DMA_DISABLE_IT(&_UART_DMA_HANDLE,DMA_IT_TC);				//关闭DMA中断
+	
+	__LOG("size: %d",sizeof(ATCommandConfig));
+	
 }
 
 void SendString(char * str)

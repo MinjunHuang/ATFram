@@ -28,6 +28,7 @@
 /* USER CODE BEGIN Includes */     
 #include "main.h"
 #include "Hardware.h"
+#include "AT.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -47,7 +48,7 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
-
+QueueHandle_t ATcmdQueue = NULL;
 
 /* USER CODE END Variables */
 osThreadId defaultTaskHandle;
@@ -90,6 +91,13 @@ void MX_FREERTOS_Init(void) {
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
+	ATcmdQueue = xQueueCreate(10, sizeof(ATCommandConfig));
+    if( ATcmdQueue == 0 )
+    {
+        /* 没有创建成功，用户可以在这里加入创建失败的处理机制 */
+		__ERRORLOG("ATcmdQueue 创建失败");
+    }
+	
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */

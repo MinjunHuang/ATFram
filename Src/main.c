@@ -97,7 +97,6 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
   UartInit();
-  printf("System Running...\r\n");
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in freertos.c) */

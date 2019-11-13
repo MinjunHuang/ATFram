@@ -437,6 +437,16 @@
               <FileType>1</FileType>
               <FilePath>..\User\Hardware.c</FilePath>
             </File>
+            <File>
+              <FileName>AT.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\AT.c</FilePath>
+            </File>
+            <File>
+              <FileName>ATCommand.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\ATCommand.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
