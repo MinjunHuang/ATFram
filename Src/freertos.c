@@ -148,9 +148,13 @@ void LEDStartTask(void const * argument)
   /* Infinite loop */
   for(;;)
   {
+	static int i=0;
 	HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_5);
+	if(i==MAXCMDNUM)
+	{i=0;}
+//	ATCommandRegister(ATCommandList[i++].ATCommandName);
 	ATCommandRegister(AT);
-    osDelay(2000);
+    osDelay(5000);
   }
   /* USER CODE END LEDStartTask */
 }

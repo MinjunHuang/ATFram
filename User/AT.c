@@ -76,7 +76,7 @@ void ATCommandSendScheduler(void)
 			}
 			
 			//进入接收数据处理回调函数
-			ATResult=SendATConfig.ATRxCpltCallback(UartRXBuff);
+			ATResult=SendATConfig.ATRxCpltCallback(SendATConfig.ATStr,UartRXBuff);
 			if(ATResult==ATSUCCESS)
 			{
 				break;

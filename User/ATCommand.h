@@ -7,8 +7,9 @@
 
 typedef enum 
 {
-  ATERROR = 0, 
-  ATSUCCESS = !ATERROR
+	ATERROR = 0, 
+	ATSUCCESS ,
+	ATERRORCODE1,
 }ATStatus;
 
 typedef ATStatus (*pFuncCallback)(char* SendCommand,char* str);
@@ -16,6 +17,8 @@ typedef ATStatus (*pFuncCallback)(char* SendCommand,char* str);
 ATStatus AT_Callback(char* SendCommand,char * str);
 ATStatus CGSN_Callback(char* SendCommand,char * str);
 
+ATStatus CheckEcho(char* SendCommand,char * str);
+ATStatus CheckEnd(void);
 
 typedef enum 
 {
@@ -49,7 +52,7 @@ typedef struct
 static const ATCommandConfig ATCommandList[]=
 {
 	{AT,	"AT\r\n",	EXEXCMD,500,5,3,AT_Callback		},
-	{CGSN,	"AT+CGSN=1",EXEXCMD,500,5,3,CGSN_Callback	},
+	{CGSN,	"AT+CGSN=1\r\n",EXEXCMD,500,5,3,CGSN_Callback	},
 };
 
 #endif
