@@ -1,7 +1,9 @@
 #ifndef _ATCOMMAND_H_
 #define _ATCOMMAND_H_
 
+#include "ATCommand.h"
 #include "stdint.h"
+#include "log.h"
 
 typedef enum 
 {
@@ -9,7 +11,11 @@ typedef enum
   ATSUCCESS = !ATERROR
 }ATStatus;
 
-typedef ATStatus (*pFuncCallback)(char* str);
+typedef ATStatus (*pFuncCallback)(char* SendCommand,char* str);
+
+ATStatus AT_Callback(char* SendCommand,char * str);
+ATStatus CGSN_Callback(char* SendCommand,char * str);
+
 
 typedef enum 
 {
@@ -28,27 +34,22 @@ typedef enum
 	MAXCMDNUM
 }eATCommand;
 
-
 typedef struct
 {		
 	eATCommand	ATCommandName;
 	char * 		ATStr;				//发送的AT指令
 	CmdType		ATCommandType;		//命令类型
 	uint16_t  	MaxResponseTime;	//发送后查询返回信息的延时，ms为单位。可设为指令最大响应时间。
-	uint8_t   	RetryDelay; 		//发送失败后再次发送时的延时，ms为单位
 	uint8_t   	MaxTryCount; 		//最大重试次数
 	uint8_t   	MaxResetCount; 		//最大重启次数
 	pFuncCallback		ATRxCpltCallback;	//AT指令接收完成，指令处理回调函数
 } ATCommandConfig;
 
-ATStatus AT_Callback(char * str);
-ATStatus CGSN_Callback(char * str);
-
 
 static const ATCommandConfig ATCommandList[]=
 {
-	{AT,	"AT\r\n",	EXEXCMD,500,100,5,3,	AT_Callback		},
-	{CGSN,	"AT+CGSN=1",EXEXCMD,500,100,5,3,	CGSN_Callback	},
+	{AT,	"AT\r\n",	EXEXCMD,500,5,3,AT_Callback		},
+	{CGSN,	"AT+CGSN=1",EXEXCMD,500,5,3,CGSN_Callback	},
 };
 
 #endif

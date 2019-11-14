@@ -1,5 +1,6 @@
 #include "Hardware.h"
 
+
 char UartRXBuff[_UART_RXBUFFSIZE];
 
 void UartInit(void)
@@ -24,7 +25,7 @@ void USER_UART_IDLECallback(UART_HandleTypeDef *huart)
 	{	 // 判断是否是空闲中断
 		return;			 
 	} 
-
+//	HAL_GPIO_TogglePin(GPIOE,GPIO_PIN_5);
 	// 清除空闲中断标志（否则会一直不断进入中断）
 	__HAL_UART_CLEAR_IDLEFLAG(& _ATUART_HANDLE); 
 	// 停止本次DMA传输
@@ -33,18 +34,18 @@ void USER_UART_IDLECallback(UART_HandleTypeDef *huart)
     // 计算接收到的数据长度
     RXDataLength  = _UART_RXBUFFSIZE - __HAL_DMA_GET_COUNTER(&_UART_DMA_HANDLE);   
     
+	UartRXBuff[RXDataLength]=0;
 	// 测试函数：将接收到的数据打印出去
     __LOG("Receive Data(length = %d):%s ",RXDataLength,UartRXBuff);                    
-
-	// 清零接收缓冲区
-    memset(UartRXBuff,0,RXDataLength);                                            
-    RXDataLength = 0;
-    
-    // 重启开始DMA传输 每次255字节数据
-    HAL_UART_Receive_DMA(&_ATUART_HANDLE, (uint8_t*)UartRXBuff, _UART_RXBUFFSIZE);                    
+	
+	//定义信号量，在接收完一帧数据后发布信号量
+	BaseType_t xHightPriorityTaskWoken=pdFALSE;
+	xSemaphoreGiveFromISR(ATRXCplSemaphore,&xHightPriorityTaskWoken);
+    //退出中断后执行最高优先级任务
+	portYIELD_FROM_ISR(xHightPriorityTaskWoken);
+  
+	// 重启开始DMA传输 每次255字节数据
+    HAL_UART_Receive_DMA(&_ATUART_HANDLE, (uint8_t*)UartRXBuff, _UART_RXBUFFSIZE);  
+//	HAL_GPIO_TogglePin(GPIOE,GPIO_PIN_5);	
 }
 
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
-{
-	__LOG("DMA Rx Cplt Callback...\r\n");
-}

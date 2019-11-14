@@ -3,9 +3,10 @@
 
 #include "Hardware.h"
 #include "ATCommand.h"
-#include "FreeRTOS.h"
+#include "cmsis_os.h"
 
-extern QueueHandle_t ATcmdQueue ;
+extern QueueHandle_t 		ATcmdQueue ;
+extern SemaphoreHandle_t  	ATRXCplSemaphore;
 
 void ATCommandRegister(eATCommand	ATCommandName);
 ATStatus CheckATCmdConsistency(void);

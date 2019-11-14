@@ -128,7 +128,7 @@ void StartDefaultTask(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-	HAL_GPIO_TogglePin(GPIOE,GPIO_PIN_5);
+	//HAL_GPIO_TogglePin(GPIOE,GPIO_PIN_5);
     osDelay(200);
 
   }
@@ -150,7 +150,7 @@ void LEDStartTask(void const * argument)
   {
 	HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_5);
 	ATCommandRegister(AT);
-    osDelay(5000);
+    osDelay(2000);
   }
   /* USER CODE END LEDStartTask */
 }
@@ -168,9 +168,7 @@ void ATStartTask(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-	HAL_GPIO_WritePin(GPIOE,GPIO_PIN_5,GPIO_PIN_SET);
 	ATCommandSendScheduler();
-	HAL_GPIO_WritePin(GPIOE,GPIO_PIN_5,GPIO_PIN_RESET);
   }
   /* USER CODE END ATStartTask */
 }

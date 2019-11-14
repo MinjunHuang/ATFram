@@ -447,6 +447,11 @@
               <FileType>1</FileType>
               <FilePath>..\User\ATCommand.c</FilePath>
             </File>
+            <File>
+              <FileName>log.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\log.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
