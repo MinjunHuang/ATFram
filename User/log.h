@@ -9,8 +9,8 @@
 #if DEBUG
 
 #define __LOG(format, ...) printf("Tick:%d >> "format"\n",HAL_GetTick(), ##__VA_ARGS__)
-	#define __LOGARRAY(array,n)	do									\
-										{	printf("Log %s Array:",#array);	\
+	#define __LOGARRAY(array,n,str)	do									\
+										{	printf("Log %s array >>:",str);	\
 											for(int i=0;i<n;i++)			\
 											{								\
 												printf("0x%02x ",(array)[i]);	\

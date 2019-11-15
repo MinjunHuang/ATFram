@@ -36,6 +36,7 @@ void USER_UART_IDLECallback(UART_HandleTypeDef *huart)
     
 	UartRXBuff[RXDataLength]=0;
 	// 测试函数：将接收到的数据打印出去
+	__LOGARRAY(UartRXBuff,RXDataLength+1,"中断接收的数据");
     __LOG("Receive Data(length = %d):%s ",RXDataLength,UartRXBuff);                    
 	
 	//定义信号量，在接收完一帧数据后发布信号量

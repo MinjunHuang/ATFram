@@ -81,7 +81,7 @@ void ATCommandSendScheduler(void)
 			{
 				break;
 			}
-			__LOG("指令:%s接收错误,重试次数:%d\n",SendATConfig.ATStr,i);
+			__LOG("指令:%s，状态错误,重试次数:%d\n",SendATConfig.ATStr,i+1);
 		}
 		
 		if(ATResult==ATSUCCESS)
