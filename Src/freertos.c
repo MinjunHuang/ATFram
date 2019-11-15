@@ -145,14 +145,15 @@ void StartDefaultTask(void const * argument)
 void LEDStartTask(void const * argument)
 {
   /* USER CODE BEGIN LEDStartTask */
+	static int i=0;
   /* Infinite loop */
   for(;;)
   {
-	static int i=0;
+	
 	HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_5);
-	if(i==MAXCMDNUM)
-	{i=0;}
-//	ATCommandRegister(ATCommandList[i++].ATCommandName);
+//	if(i==MAXCMDNUM)
+//	{i=0;}
+	//ATCommandRegister(ATCommandList[i++].ATCommandName);
 	ATCommandRegister(AT);
     osDelay(5000);
   }
