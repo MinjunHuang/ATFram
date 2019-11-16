@@ -25,7 +25,7 @@
 #include "cmsis_os.h"
 
 /* Private includes ----------------------------------------------------------*/
-/* USER CODE BEGIN Includes */  
+/* USER CODE BEGIN Includes */     
 #include <cm_backtrace.h>
 #include "main.h"
 #include "AT.h"
@@ -106,7 +106,7 @@ void MX_FREERTOS_Init(void) {
   LedTaskHandle = osThreadCreate(osThread(LedTask), NULL);
 
   /* definition and creation of ATTask */
-  osThreadDef(ATTask, ATStartTask, osPriorityNormal, 0, 150);
+  osThreadDef(ATTask, ATStartTask, osPriorityNormal, 0, 128);
   ATTaskHandle = osThreadCreate(osThread(ATTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
@@ -137,22 +137,6 @@ void StartDefaultTask(void const * argument)
   /* USER CODE END StartDefaultTask */
 }
 
-typedef struct ring_buffer {
-	  /**< Buffer items are stored into */
-volatile uint16_t head;         /**< Index of the next item to remove */
-volatile uint16_t tail;         /**< Index where the next item will get inserted */
-volatile uint16_t size;         /**< Buffer capacity minus one */
-volatile uint8_t * buf; 
-} ring_buffer;
-
-void rb_init(ring_buffer *rb, uint16_t size, uint8_t *pbuff) {
-    rb->head = 0;
-    rb->tail = 0;
-    rb->size = size-1;
-    rb->buf = pbuff;
-	
-}
-
 /* USER CODE BEGIN Header_LEDStartTask */
 /**
 * @brief Function implementing the LedyTask thread.
@@ -163,7 +147,7 @@ void rb_init(ring_buffer *rb, uint16_t size, uint8_t *pbuff) {
 void LEDStartTask(void const * argument)
 {
   /* USER CODE BEGIN LEDStartTask */
-	static int i=0;
+	static int i=0,count=0;
 	unsigned portBASE_TYPE uxHighWaterMark;
   /* Infinite loop */
   for(;;)
@@ -172,16 +156,16 @@ void LEDStartTask(void const * argument)
 	if(i==MAXCMDNUM)
 	{i=0;}
 	ATCommandRegister(ATCommandList[i++].ATCommandName);
-
-	uxHighWaterMark=uxTaskGetStackHighWaterMark( ATTaskHandle );
-	__LOG("ATTask剩余栈空间是多少：%ld\r\n",uxHighWaterMark);
-	uxHighWaterMark=uxTaskGetStackHighWaterMark( defaultTaskHandle );
-	__LOG("defaultTaskHandle剩余栈空间是多少：%ld\r\n",uxHighWaterMark);
-	uxHighWaterMark=uxTaskGetStackHighWaterMark( LedTaskHandle );
-	__LOG("LedTaskHandle剩余栈空间是多少：%ld\r\n",uxHighWaterMark);
+	__LOG("注册次数:%d",count++);
+//	uxHighWaterMark=uxTaskGetStackHighWaterMark( ATTaskHandle );
+//	__LOG("ATTask剩余栈空间是多少：%ld\r\n",uxHighWaterMark);
+//	uxHighWaterMark=uxTaskGetStackHighWaterMark( defaultTaskHandle );
+//	__LOG("defaultTaskHandle剩余栈空间是多少：%ld\r\n",uxHighWaterMark);
+//	uxHighWaterMark=uxTaskGetStackHighWaterMark( LedTaskHandle );
+//	__LOG("LedTaskHandle剩余栈空间是多少：%ld\r\n",uxHighWaterMark);
 	
-	volatile int * SCB_CCR = (volatile int *) 0xE000ED14; // SCB->CCR
-	*SCB_CCR |= (1 << 4); /* bit4: DIV_0_TRP. */
+//	volatile int * SCB_CCR = (volatile int *) 0xE000ED14; // SCB->CCR
+//	*SCB_CCR |= (1 << 4); /* bit4: DIV_0_TRP. */
 //    x = 10;
 //    y = 0;
 //    z = x / y;
@@ -192,7 +176,6 @@ void LEDStartTask(void const * argument)
   }
   /* USER CODE END LEDStartTask */
 }
-
 
 /* USER CODE BEGIN Header_ATStartTask */
 /**

@@ -10,14 +10,15 @@
 
 #if DEBUG
 
-#define __LOGNOLF(format, ...) do{		\
-								char * UartTXBuff = (char *)calloc(128,sizeof(char)); \
-								sprintf(UartTXBuff,"Tick:%d >> "format,HAL_GetTick(), ##__VA_ARGS__); \
-								strrpc(UartTXBuff,"\r\n","-*");	\
-								UartTXBuff[strlen(UartTXBuff)]='\n';		\
-								HAL_UART_Transmit(&huart1, (uint8_t *)UartTXBuff, strlen(UartTXBuff), 1000);	\
-								free(UartTXBuff);\
-								}while(0u)
+#define __LOGNOLF(format, ...) printf("Tick:%d >> "format"\n",HAL_GetTick(), ##__VA_ARGS__)
+//								do{		\
+//								char * UartTXBuff = (char *)calloc(128,sizeof(char)); \
+//								sprintf(UartTXBuff,"Tick:%d >> "format,HAL_GetTick(), ##__VA_ARGS__); \
+//								strrpc(UartTXBuff,"\r\n","-*");	\
+//								UartTXBuff[strlen(UartTXBuff)]='\n';		\
+//								HAL_UART_Transmit(&huart1, (uint8_t *)UartTXBuff, strlen(UartTXBuff), 1000);	\
+//								free(UartTXBuff);\
+//								}while(0u)
 
 #define __LOG(format, ...) printf("Tick:%d >> "format"\n",HAL_GetTick(), ##__VA_ARGS__)
 #define __LOGARRAY(array,n,str)	do									\

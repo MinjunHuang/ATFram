@@ -101,11 +101,10 @@ int main(void)
   MX_USART1_UART_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-	cm_backtrace_init("ATFramework", HARDWARE_VERSION, SOFTWARE_VERSION);
+//	cm_backtrace_init("ATFramework", HARDWARE_VERSION, SOFTWARE_VERSION);
 	printf("System initialize finish. Starting..\r\n");
 	ATFormInit();
-	volatile int * SCB_CCR = (volatile int *) 0xE000ED14; // SCB->CCR
-	*SCB_CCR |= (1 << 4); /* bit4: DIV_0_TRP. */
+
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in freertos.c) */

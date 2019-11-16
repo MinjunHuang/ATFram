@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F103xE,USE_HAL_DRIVER,STM32F103xE</Define>
               <Undefine></Undefine>
-              <IncludePath>../Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;..\User;..\User\LOG</IncludePath>
+              <IncludePath>../Inc; ../Drivers/STM32F1xx_HAL_Driver/Inc; ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy; ../Middlewares/Third_Party/FreeRTOS/Source/include; ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS; ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3; ../Drivers/CMSIS/Device/ST/STM32F1xx/Include; ../Drivers/CMSIS/Include; ..\User; ..\User\LOG</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -393,6 +393,26 @@
           <GroupName>Application/User</GroupName>
           <Files>
             <File>
+              <FileName>Hardware.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\Hardware.c</FilePath>
+            </File>
+            <File>
+              <FileName>AT.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\AT.c</FilePath>
+            </File>
+            <File>
+              <FileName>ATCommand.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\ATCommand.c</FilePath>
+            </File>
+            <File>
+              <FileName>log.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\log.c</FilePath>
+            </File>
+            <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Src/main.c</FilePath>
@@ -431,26 +451,6 @@
               <FileName>stm32f1xx_hal_timebase_tim.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Src/stm32f1xx_hal_timebase_tim.c</FilePath>
-            </File>
-            <File>
-              <FileName>Hardware.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\User\Hardware.c</FilePath>
-            </File>
-            <File>
-              <FileName>AT.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\User\AT.c</FilePath>
-            </File>
-            <File>
-              <FileName>ATCommand.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\User\ATCommand.c</FilePath>
-            </File>
-            <File>
-              <FileName>log.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\User\log.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -586,23 +586,6 @@
         </Group>
         <Group>
           <GroupName>CmBacktrace</GroupName>
-          <Files>
-            <File>
-              <FileName>cm_backtrace.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\User\LOG\cm_backtrace.c</FilePath>
-            </File>
-            <File>
-              <FileName>fault_test.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\User\LOG\fault_test.c</FilePath>
-            </File>
-            <File>
-              <FileName>cmb_fault.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>..\User\LOG\cmb_fault.S</FilePath>
-            </File>
-          </Files>
         </Group>
         <Group>
           <GroupName>::CMSIS</GroupName>
