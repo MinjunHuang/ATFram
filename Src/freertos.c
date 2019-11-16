@@ -128,7 +128,7 @@ void StartDefaultTask(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-	//HAL_GPIO_TogglePin(GPIOE,GPIO_PIN_5);
+	HAL_GPIO_TogglePin(GPIOE,GPIO_PIN_5);
     osDelay(200);
 
   }

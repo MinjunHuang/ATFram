@@ -1,9 +1,8 @@
 #ifndef _ATCOMMAND_H_
 #define _ATCOMMAND_H_
 
-#include "ATCommand.h"
-#include "stdint.h"
 #include "log.h"
+#include "ATtype.h"
 
 typedef enum 
 {
@@ -12,27 +11,12 @@ typedef enum
 	ATERRORCODE1,
 }ATStatus;
 
-typedef ATStatus (*pFuncCallback)(char* SendCommand,char* str);
-
-ATStatus AT_Callback(char* SendCommand,char * str);
-ATStatus CGSN_Callback(char* SendCommand,char * str);
-
-ATStatus CheckEcho(char* SendCommand,char * str);
-ATStatus CheckEnd(void);
-
-typedef enum 
-{
-	EXEXCMD,
-	TESTCMD,
-	READCMD,
-	WRITECMD,
-}CmdType;
+typedef ATStatus (*pFuncCallback)(char* str);
 
 typedef enum 
 {
 	AT=0,
-	CGSN,
-	
+	 CGSN,CSQ,
 	/**将指令添加到上面**/
 	MAXCMDNUM
 }eATCommand;
@@ -49,10 +33,16 @@ typedef struct
 } ATCommandConfig;
 
 
+ATStatus AT_Callback(char * str);
+ATStatus CGSN_Callback(char * str);
+ATStatus CSQ_Callback(char *str);
+
+
 static const ATCommandConfig ATCommandList[]=
 {
-	{AT,	"AT\r\n",	EXEXCMD,500,5,3,AT_Callback		},
+	{AT,	"AT\r\n",		EXEXCMD,500,5,3,	NULL		},
 	{CGSN,	"AT+CGSN=1\r\n",EXEXCMD,500,5,3,CGSN_Callback	},
+	{CSQ,	"AT+CSQ\r\n",	EXEXCMD,500,5,3,CSQ_Callback	}
 };
 
 #endif

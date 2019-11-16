@@ -12,6 +12,9 @@ void ATCommandRegister(eATCommand	ATCommandName);
 ATStatus CheckATCmdConsistency(void);
 ATStatus ATFormInit(void);
 
+ATStatus CheckEcho(char* SendCommand,char * str,char ** ReStr);
+ATStatus CheckEnd(char *str);
+
 void ATCommandSendScheduler(void);
 
 
