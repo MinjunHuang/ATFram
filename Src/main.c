@@ -28,6 +28,11 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "Hardware.h"
+#include <cm_backtrace.h>
+
+#define HARDWARE_VERSION               "V1.0.0"
+#define SOFTWARE_VERSION               "V0.1.0"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -96,7 +101,11 @@ int main(void)
   MX_USART1_UART_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-  ATFormInit();
+	cm_backtrace_init("ATFramework", HARDWARE_VERSION, SOFTWARE_VERSION);
+	printf("System initialize finish. Starting..\r\n");
+	ATFormInit();
+	volatile int * SCB_CCR = (volatile int *) 0xE000ED14; // SCB->CCR
+	*SCB_CCR |= (1 << 4); /* bit4: DIV_0_TRP. */
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in freertos.c) */

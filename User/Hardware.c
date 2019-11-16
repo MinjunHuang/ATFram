@@ -1,6 +1,5 @@
 #include "Hardware.h"
 
-
 char UartRXBuff[_UART_RXBUFFSIZE];
 
 void UartInit(void)

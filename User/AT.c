@@ -120,7 +120,7 @@ void ATCommandSendScheduler(void)
   {
   	__ERRORLOG("读取队列数据失败");
   }
-  HAL_GPIO_WritePin(GPIOE,GPIO_PIN_5,GPIO_PIN_RESET);
+
   //发送AT指令并数据处理
   for(int j=0;j<SendATConfig.MaxResetCount;j++)
   {	//发送失败后重启
