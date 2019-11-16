@@ -42,6 +42,7 @@ void ATCommandRegister(eATCommand	ATCommandName)
 	{/* 发送失败*/
 	  __ERRORLOG("添加命令到队列失败,队列已满");
 	}
+	
 	__LOG("Register CMD：%s",ATCommandList[ATCommandName].ATStr);
 }
 
@@ -57,7 +58,7 @@ void ATCommandSendScheduler(void)
 	{
 		__ERRORLOG("读取队列数据失败");
 	}
-	
+	HAL_GPIO_WritePin(GPIOE,GPIO_PIN_5,GPIO_PIN_RESET);
 	//发送AT指令并数据处理
 	for(int j=0;j<SendATConfig.MaxResetCount;j++)
 	{	//发送失败后重启
@@ -81,13 +82,16 @@ void ATCommandSendScheduler(void)
 			{
 				break;
 			}
+			__LOG("---------------------------------------------------------\n");
 			__LOG("指令:%s，状态错误,重试次数:%d\n",SendATConfig.ATStr,i+1);
 		}
 		
 		if(ATResult==ATSUCCESS)
 		{//数据处理完成
+			__LOG("******************************************************");
 			break;
 		}
+		
 		__LOG("指令:%s接收错误,重启次数:%d\n",SendATConfig.ATStr,j);
 	}
 

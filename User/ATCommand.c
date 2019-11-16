@@ -14,31 +14,34 @@ RxStrInfo RxHandleInfo;
 ATStatus CheckEcho(char* SendCommand,char * str)
 {
 	char *ret;
-	int Marklen;
+	int Marklen=strlen(SendCommand);
+	int result=1;
 	RxHandleInfo.len =strlen(str);
+	
 	memcpy(DateHandleBuff,str,RxHandleInfo.len+1);
 	RxHandleInfo.RxBuff=DateHandleBuff;
 	__LOGARRAY(DateHandleBuff,RxHandleInfo.len+1,"接收到的字符串");
 
 	//查找第一个换行符，进行回显检查
-	ret = (char*)memchr(DateHandleBuff, '\n', strlen(str));
-	*ret=0;				//将回显字符串进行截断
-	__LOGARRAY(DateHandleBuff,RxHandleInfo.len+1,"回显字符切片");
-	Marklen=strlen(DateHandleBuff);			//更新回显字符串长度
-	
+	ret = (char*)memchr(DateHandleBuff, '\n', RxHandleInfo.len);
+
 	//检查回显与发送字符是否一致
-	if(strncmp(SendCommand, DateHandleBuff, Marklen-1)==0)
+	result=strncmp(SendCommand, DateHandleBuff, Marklen);
+				
+	
+	if(result==0)
 	{
-		__LOG("Data Consistency，Echo is:%s",DateHandleBuff);
+		*ret=0;	//将回显字符串进行截断
+		__LOG("回显检查完成，Echo is:%s",DateHandleBuff);
 		return ATSUCCESS;
 	}
 	else
 	{
-		__LOG("Inconsistency of Data，Echo is:%s%s",DateHandleBuff,SendCommand);
-		__LOGARRAY(DateHandleBuff,Marklen-1,"接收到的回显");
-		__LOGARRAY(SendCommand,Marklen-1,"发送的命令");
+		__ERRORLOG(" 发送命令与回显不一致 ");
+		__LOGARRAY(DateHandleBuff,ret-DateHandleBuff,"接收的回显");
+		__LOGARRAY(SendCommand,Marklen,"发送的命令");
 		
-		__ERRORLOG("命令回显不一致，发送命令：%s，接收回显：%s",DateHandleBuff,SendCommand);
+		
 		return ATERROR;
 	}
 }
