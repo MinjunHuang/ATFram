@@ -13,7 +13,7 @@
 #define __LOGNOLF(format, ...) do{		\
 								char * UartTXBuff = (char *)calloc(128,sizeof(char)); \
 								sprintf(UartTXBuff,"Tick:%d >> "format,HAL_GetTick(), ##__VA_ARGS__); \
-								strrpc(UartTXBuff,"\r\n","-*");	\
+								StrNoLR(UartTXBuff);	\
 								UartTXBuff[strlen(UartTXBuff)]='\n';		\
 								HAL_UART_Transmit(&huart1, (uint8_t *)UartTXBuff, strlen(UartTXBuff), 1000);	\
 								free(UartTXBuff);\
@@ -34,7 +34,7 @@
 
 #define __ERRORLOG(format,...)  printf("\nERROR LOG \nTick:%d >>File:" __FILE__ " Line:%d\nERROR LOG INFO >>"format"\n\n",HAL_GetTick(), __LINE__, ##__VA_ARGS__)   
 
-void strrpc(char *str,char *oldstr,char *newstr);
+char * mystrcat(int n,...);
 void StrNoLR(char * str);
 
 #endif

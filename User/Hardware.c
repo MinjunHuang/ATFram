@@ -1,4 +1,5 @@
 #include "Hardware.h"
+#include "stdarg.h"
 
 char UartRXBuff[_UART_RXBUFFSIZE];
 
@@ -49,6 +50,21 @@ void USER_UART_IDLECallback(UART_HandleTypeDef *huart)
 	// 重启开始DMA传输 每次255字节数据
     HAL_UART_Receive_DMA(&_ATUART_HANDLE, (uint8_t*)UartRXBuff, _UART_RXBUFFSIZE);  
 
+}
+
+void SendMultiStr(int n,...)
+{
+
+    char *str;
+    va_list v1;
+	va_start(v1,n);
+
+	for (size_t i = 0; i < n; i++)
+	{
+		str=va_arg(v1,char*);
+		HAL_UART_Transmit(& _ATUART_HANDLE,(uint8_t *)str,strlen(str),_UART_TIMEOUT);
+	}
+    va_end(v1);
 }
 
 void MoudleResst(void)

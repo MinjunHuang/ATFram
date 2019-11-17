@@ -1,6 +1,6 @@
 #include "log.h"
 #include "string.h"
-
+#include "stdarg.h"
 
 //÷ÿ∂®œÚfputc
 int fputc(int ch, FILE *f)
@@ -10,8 +10,10 @@ int fputc(int ch, FILE *f)
 	return (ch);
 }
 
-void strrpc(char *str,char *oldstr,char *newstr){
-   int len=strlen(str);
+
+void StrNoLR(char * str)
+{
+	int len=strlen(str);
 	for(int i=0;i<len;i++)
 	{
 		if(str[i]=='\r')
@@ -21,7 +23,29 @@ void strrpc(char *str,char *oldstr,char *newstr){
 	}
 }
 
-void StrNoLR(char * str)
+char * mystrcat(int n,...)
 {
-	strrpc(str,"\r\n","**");
+	int len=0,j=0;
+    char *str,*first;
+
+    va_list v1;
+	va_start(v1,n);
+	first=va_arg(v1,char*);
+    str = first;
+
+	while(first[len++]);
+	len--;
+	for (size_t i = 0; i < n-1; i++,j=0)
+	{
+		str=va_arg(v1,char*);
+		printf("%s\n",str);
+		while(str[j])
+		{
+			printf("%c\n",str[j]);
+			printf("%c\n",first[len-1]);
+			first[len++]=str[j++];
+		}
+	}
+    va_end(v1);
+	return first;
 }

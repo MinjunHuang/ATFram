@@ -147,32 +147,22 @@ void StartDefaultTask(void const * argument)
 void LEDStartTask(void const * argument)
 {
   /* USER CODE BEGIN LEDStartTask */
-	static int i=0,count=0;
+	
+	ATCommandRegister(AT,EXEXCMD,NULL);
+	ATCommandRegister(CSQ,EXEXCMD,NULL);
+	ATCommandRegister(CGATT,WRITECMD,"1");
+
 
   /* Infinite loop */
   for(;;)
   {
 	
-	if(i==MAXCMDNUM)
-	{i=0;}
-	ATCommandRegister(ATCommandList[i++].ATCommandName);
-	__LOG("注册次数:%d",count++);
+	ATCommandRegister(AT,EXEXCMD,NULL);
+//	int uxHighWaterMark;
 //	uxHighWaterMark=uxTaskGetStackHighWaterMark( ATTaskHandle );
 //	__LOG("ATTask剩余栈空间是多少：%ld\r\n",uxHighWaterMark);
-//	uxHighWaterMark=uxTaskGetStackHighWaterMark( defaultTaskHandle );
-//	__LOG("defaultTaskHandle剩余栈空间是多少：%ld\r\n",uxHighWaterMark);
-//	uxHighWaterMark=uxTaskGetStackHighWaterMark( LedTaskHandle );
-//	__LOG("LedTaskHandle剩余栈空间是多少：%ld\r\n",uxHighWaterMark);
-	
-//	volatile int * SCB_CCR = (volatile int *) 0xE000ED14; // SCB->CCR
-//	*SCB_CCR |= (1 << 4); /* bit4: DIV_0_TRP. */
-//    x = 10;
-//    y = 0;
-//    z = x / y;
-//    printf("z:%d\n", z);
-//	void fault_test_by_unalign(void);
-//	fault_test_by_unalign();
-    osDelay(100);
+
+    osDelay(5000);
   }
   /* USER CODE END LEDStartTask */
 }

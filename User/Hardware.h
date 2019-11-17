@@ -20,6 +20,7 @@ extern char UartRXBuff[_UART_RXBUFFSIZE];
 
 void UartInit(void);
 void SendString(char * str);
+void SendMultiStr(int n,...);
 void MoudleResst(void);
 void USER_UART_IDLECallback(UART_HandleTypeDef *huart);
 

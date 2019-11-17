@@ -8,11 +8,17 @@
 extern QueueHandle_t 		ATcmdQueue ;
 extern SemaphoreHandle_t  	ATRXCplSemaphore;
 
-void ATCommandRegister(eATCommand	ATCommandName);
+typedef struct {
+	ATCommand 	RegCommandName;
+	CmdType		RegCommandType;
+	char *		RegCommandParam;
+}ATCommandRegInfo;
+
+void ATCommandRegister(ATCommand ATCommandName,CmdType ATCommandType,char* ATCommandParam);
 ATStatus CheckATCmdConsistency(void);
 ATStatus ATFormInit(void);
 
-ATStatus CheckEcho(char* SendCommand,char * str,char ** ReStr);
+ATStatus CheckEcho(ATCommandRegInfo SendATInfo,char * str,char ** ReStr);
 ATStatus CheckEnd(char *str);
 
 void ATCommandSendScheduler(void);

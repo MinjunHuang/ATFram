@@ -22,3 +22,7 @@ ATStatus CSQ_Callback(char *str)
 	return ATSUCCESS;
 }
 
+ATStatus CGATT_Callback(char *str)
+{
+	return ATSUCCESS;
+}
