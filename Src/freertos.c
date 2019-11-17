@@ -148,7 +148,7 @@ void LEDStartTask(void const * argument)
 {
   /* USER CODE BEGIN LEDStartTask */
 	static int i=0,count=0;
-	unsigned portBASE_TYPE uxHighWaterMark;
+
   /* Infinite loop */
   for(;;)
   {

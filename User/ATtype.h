@@ -5,13 +5,7 @@
 
 #define _ATCOMMANDNAMELIST CGSN,CSQ
 
-typedef enum 
-{
-	EXEXCMD,
-	TESTCMD,
-	READCMD,
-	WRITECMD,
-}CmdType;
+
 
 
 

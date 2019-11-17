@@ -11,6 +11,14 @@ typedef enum
 	ATERRORCODE1,
 }ATStatus;
 
+typedef enum 
+{
+	EXEXCMD,
+	TESTCMD,
+	READCMD,
+	WRITECMD,
+}CmdType;
+
 typedef ATStatus (*pFuncCallback)(char* str);
 
 typedef enum 
