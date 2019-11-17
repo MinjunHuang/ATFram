@@ -151,17 +151,13 @@ void LEDStartTask(void const * argument)
 	ATCommandRegister(AT,EXEXCMD,NULL);
 	ATCommandRegister(CSQ,EXEXCMD,NULL);
 	ATCommandRegister(CGATT,WRITECMD,"1");
-
-
+	ATCommandRegister(NSOCR,WRITECMD,"STREAM,6,4587,1,AF_INET");
+	ATCommandRegister(NSOCO,WRITECMD,"1,180.97.81.180,58152");
   /* Infinite loop */
   for(;;)
   {
 	
-	ATCommandRegister(AT,EXEXCMD,NULL);
-//	int uxHighWaterMark;
-//	uxHighWaterMark=uxTaskGetStackHighWaterMark( ATTaskHandle );
-//	__LOG("ATTask剩余栈空间是多少：%ld\r\n",uxHighWaterMark);
-
+	ATCommandRegister(NSOSD,WRITECMD,"1,4,31323334");
     osDelay(5000);
   }
   /* USER CODE END LEDStartTask */

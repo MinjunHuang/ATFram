@@ -26,3 +26,22 @@ ATStatus CGATT_Callback(char *str)
 {
 	return ATSUCCESS;
 }
+
+ATStatus NSCR_Calback(char *str)
+{
+	return ATSUCCESS;
+}
+ATStatus NSOCO_Callback(char *str)
+{
+	return ATSUCCESS;
+}
+ATStatus NSOSD_Callback(char *str)
+{
+	return ATSUCCESS;
+}
+ATStatus NSORF_Callback(char *str)
+{
+	return ATSUCCESS;
+}
+
+
